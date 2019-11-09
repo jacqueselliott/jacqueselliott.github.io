@@ -1,33 +1,53 @@
 <!doctype html>
 <html>
-<script type="text/javascript" src="js/homepage.js"></script>
+
+<script src="https://kit.fontawesome.com/3a9b5faea3.js" crossorigin="anonymous"></script>
+<script src="js/homepage.js"></script>
 
 <title>jacques' website</title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
 <style>
 body,h1 {
   font-family: "Raleway", sans-serif;
 }
 body, html {height: 100%}
+a {
+  text-decoration: none;
+}
 .bg {
   min-height: 100%;
   background-position: center;
   background-size: cover;
 }
+.zoom {
+  transition: transform 0.05s ease;
+}
+.zoom:hover {
+  transform: scale(1.1);
+}
 </style>
 <body>
 
-<div class="bg w3-display-container w3-animate-opacity w3-text-dark-grey">
-  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+<div class="bg w3-display-container w3-text-dark-grey">
+  <div id="top-right" class="w3-display-topright w3-padding-large w3-xxlarge">
+    <a href="https://www.linkedin.com/in/jacqueselliott" target="_blank">
+      <i class="fab fa-linkedin-in w3-padding-small zoom"></i>
+    </a>
+    <a href="https://github.com/jacqueselliott" target="_blank">
+      <i class="fab fa-github w3-padding-small zoom"></i>
+    </a>
   </div>
-  <div class="w3-display-middle">
+  <div id="middle" class="w3-display-middle">
     <h1 class="w3-jumbo w3-animate-opacity">website</h1>
     <hr class="w3-border-dark-grey" style="margin:auto;width:40%">
-    <div class="w3-center">
-      <p id="play-button" onclick="onPlayClick()" class="w3-large w3-btn w3-padding-large w3-round w3-ripple"><b>play</b></p>
+    <div id="play" class="w3-center">
+      <p onclick="onPlayClick(this)" class="w3-large w3-btn w3-padding-large w3-round w3-ripple zoom"><b>play</b></p>
     </div> 
   </div>
 </div>
