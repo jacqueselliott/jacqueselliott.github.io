@@ -1,3 +1,5 @@
+import {fadeChildrenOf} from "./homepage-animation.js";
+
 function onPlayClick(playButtonElement) {
   modifyPlayButton(playButtonElement);
   fadeHomePage();

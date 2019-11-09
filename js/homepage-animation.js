@@ -23,3 +23,5 @@ function fadeAway(element) {
     }
   }, timeBetweenDecrements);
 }
+
+export {fadeChildrenOf};
