@@ -33,29 +33,34 @@ var Key = {
   }
 };
 
+class Coordinates {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
 var Touch = {
   touching: false,
-  x: 0,
-  y: 0,
+  coordinates: new Coordinates(0, 0),
   
   isTouching: function() {
     return this.touching;
   },
 
-  coordinates: function() {
-    return this.x, this.y;
+  getCoordinates: function() {
+    return this.coordinates;
   },
 
   onTouch: function(event) {
     this.touching = true;
-    this.x = event.touches[0].clientX;
-    this.y = event.touches[0].clientY;
+    this.coordinates = new Coordinates(event.touches[0].clientX, event.touches[0].clientY);
   },
 
   onTouchEnd: function(event) {
     this.touching = false;
   }
-}
+};
 
 function initialiseInputListeners() {
   document.addEventListener("keyup", function(event) { 
@@ -64,13 +69,13 @@ function initialiseInputListeners() {
   document.addEventListener("keydown", function(event) {
     Key.onKeydown(event); 
   }, false);
-  canvas.addEventListener("ontouchenter", function(event) {
+  canvas.addEventListener("touchstart", function(event) {
     Touch.onTouch(event);
   }, false);
-  canvas.addEventListener("ontouchmove", function(event) {
+  canvas.addEventListener("touchmove", function(event) {
     Touch.onTouch(event);
   }, false);
-  canvas.addEventListener("ontouchend", function(event) {
+  canvas.addEventListener("touchend", function(event) {
     Touch.onTouchEnd(event);
   }, false);
   canvas.addEventListener("mouseout", function(event) {
