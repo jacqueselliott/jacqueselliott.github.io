@@ -1,76 +1,66 @@
-var canvas;
-var ctx;
+var hasChanged = true;
 
-var x;
-var y;
+var cameraX;
+var cameraY;
 var dx = 6;
 var dy = 6;
 
-var Key = {
-  pressed: {},
-
-  LEFT: 37,
-  UP: 38,
-  RIGHT: 39,
-  DOWN: 40,
-  W: 87,
-  A: 65,
-  S: 83,
-  D: 68,
-  
-  isDown: function(keyCode) {
-    return this.pressed[keyCode];
-  },
-  
-  onKeydown: function(event) {
-    this.pressed[event.keyCode] = true;
-  },
-  
-  onKeyup: function(event) {
-    delete this.pressed[event.keyCode];
-  }
-};
+var numPointsMax = 12;
 
 function startGame() {
   createCanvas();
-  setInterval(drawCharacter, 1000/60);
-  initialiseControls();
-}
-
-function createCanvas() {
-  var element = document.createElement("canvas");
-  element.width = document.body.clientWidth;
-  element.height = document.body.clientHeight;
-  canvas = element;
-  ctx = canvas.getContext("2d");
-  x = canvas.width / 2;
-  y = canvas.height / 2;
-  var container = document.getElementById("middle");
-  container.appendChild(canvas);
-}
-
-function drawCharacter() {
-  readInputs();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.arc(x, y, 50, 0, Math.PI * 2);
-  ctx.fillStyle = "#080808";
-  ctx.fill();
-  ctx.closePath();
+  initialiseXY();
+  initialiseInputListeners();
+  setInterval(draw, 1000/60);
 }
 
 function readInputs() {
-  if (Key.isDown(Key.UP) || Key.isDown(Key.W)) y -= dy;
-  if (Key.isDown(Key.LEFT) || Key.isDown(Key.A)) x -= dx;
-  if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) y += dy;
-  if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) x += dx;
+  if (Key.isDown(Key.UP) || Key.isDown(Key.W)) {
+    cameraY -= dy;
+    hasChanged = true;
+  }
+  if (Key.isDown(Key.LEFT) || Key.isDown(Key.A)) {
+    cameraX -= dx;
+    hasChanged = true;
+  } 
+  if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) {
+    cameraY += dy;
+    hasChanged = true;
+  } 
+  if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) {
+    cameraX += dx;
+    hasChanged = true;
+  } 
 }
 
-function initialiseControls() {
-  document.addEventListener("keyup", function(event) { 
-    Key.onKeyup(event); 
-  }, false);
-  document.addEventListener("keydown", function(event) {
-    Key.onKeydown(event); 
-  }, false);
+function draw() {
+  readInputs();
+  if (!hasChanged) {
+    return;
+  }
+  clearCanvas();
+  drawCharacter();
+  drawField();
+
+  hasChanged = false;
+}
+
+function drawCharacter() {
+  drawCircle(canvas.width / 2, canvas.height / 2, 30);
+}
+
+function drawField() {
+  var distanceBetweenPoints = (canvas.width > canvas.height) ? canvas.width / numPointsMax : canvas.height / numPointsMax;
+  firstX = - cameraX % distanceBetweenPoints;
+  firstY = - cameraY % distanceBetweenPoints;
+  for (var i = firstX; i < canvas.width; i += distanceBetweenPoints) {
+    for (var j = firstY; j < canvas.height; j += distanceBetweenPoints) {
+      drawCircle(i, j, 2);
+    }
+  }
+}
+
+function initialiseXY() {
+  cameraX = canvas.width / 2;
+  cameraY = canvas.height / 2;
 }
