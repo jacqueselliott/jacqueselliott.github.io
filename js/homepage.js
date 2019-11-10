@@ -1,6 +1,7 @@
 function onPlayClick(playButtonElement) {
   modifyPlayButton(playButtonElement);
   fadeHomePage();
+  setTimeout(startGame, transitionTime);
 }
 
 function modifyPlayButton(element) {
