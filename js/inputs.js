@@ -33,12 +33,45 @@ var Key = {
   }
 };
 
+var Touch = {
+  touching: false,
+  x: 0,
+  y: 0,
+  
+  isTouching: function() {
+    return this.touching;
+  },
+
+  coordinates: function() {
+    return this.x, this.y;
+  },
+
+  onTouch: function(event) {
+    this.touching = true;
+    this.x = event.touches[0].clientX;
+    this.y = event.touches[0].clientY;
+  },
+
+  onTouchEnd: function(event) {
+    this.touching = false;
+  }
+}
+
 function initialiseInputListeners() {
   document.addEventListener("keyup", function(event) { 
     Key.onKeyup(event); 
   }, false);
   document.addEventListener("keydown", function(event) {
     Key.onKeydown(event); 
+  }, false);
+  canvas.addEventListener("ontouchenter", function(event) {
+    Touch.onTouch(event);
+  }, false);
+  canvas.addEventListener("ontouchmove", function(event) {
+    Touch.onTouch(event);
+  }, false);
+  canvas.addEventListener("ontouchend", function(event) {
+    Touch.onTouchEnd(event);
   }, false);
   canvas.addEventListener("mouseout", function(event) {
     Key.onMouseLeave(event);

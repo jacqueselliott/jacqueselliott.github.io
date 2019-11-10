@@ -14,6 +14,19 @@ function startGame() {
   setInterval(draw, 1000/60);
 }
 
+function draw() {
+  readInputs();
+  if (!hasChanged) {
+    return;
+  }
+
+  clearCanvas();
+  drawCharacter();
+  drawField();
+
+  hasChanged = false;
+}
+
 function readInputs() {
   if (Key.isDown(Key.UP) || Key.isDown(Key.W)) {
     cameraY -= dy;
@@ -30,20 +43,20 @@ function readInputs() {
   if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) {
     cameraX += dx;
     hasChanged = true;
+  }
+  if (Touch.isTouching()) {
+    handleTouch();
+    hasChanged = true;
   } 
 }
 
-function draw() {
-  readInputs();
-  if (!hasChanged) {
-    return;
-  }
-
-  clearCanvas();
-  drawCharacter();
-  drawField();
-
-  hasChanged = false;
+function handleTouch() {
+  touchX, touchY = Touch.coordinates();
+  touchMagnitude = Math.sqrt(Math.pow(touchX, 2) + Math.pow(touchY, 2));
+  deltaX = ((touchX - canvas.width) / touchMagnitude) * dx;
+  deltaY = ((touchY - canvas.height) / touchMagnitude) * dy;
+  x += deltaX;
+  y += deltaY;
 }
 
 function drawCharacter() {
