@@ -38,6 +38,7 @@ function draw() {
   if (!hasChanged) {
     return;
   }
+
   clearCanvas();
   drawCharacter();
   drawField();
@@ -53,8 +54,8 @@ function drawField() {
   var distanceBetweenPoints = (canvas.width > canvas.height) ? canvas.width / numPointsMax : canvas.height / numPointsMax;
   firstX = - cameraX % distanceBetweenPoints;
   firstY = - cameraY % distanceBetweenPoints;
-  for (var i = firstX; i < canvas.width; i += distanceBetweenPoints) {
-    for (var j = firstY; j < canvas.height; j += distanceBetweenPoints) {
+  for (var i = firstX; i <= canvas.width; i += distanceBetweenPoints) {
+    for (var j = firstY; j <= canvas.height; j += distanceBetweenPoints) {
       drawCircle(i, j, 2);
     }
   }
