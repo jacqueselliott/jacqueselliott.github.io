@@ -16,7 +16,7 @@ function startGame() {
 }
 
 function draw() {
-  readInputs();
+  handleInputs();
   if (!hasChanged) {
     return;
   }
@@ -28,7 +28,7 @@ function draw() {
   hasChanged = false;
 }
 
-function readInputs() {
+function handleInputs() {
   if (Key.isDown(Key.UP) || Key.isDown(Key.W)) {
     cameraY -= dy;
     hasChanged = true;
@@ -53,13 +53,10 @@ function readInputs() {
 
 function handleTouch() {
   var touchCoordinates = Touch.getCoordinates();
-  console.log(touchCoordinates);
   centredCoordinates = new Coordinates(touchCoordinates.x - (canvas.width / 2), touchCoordinates.y - (canvas.height / 2));
   magnitude = Math.sqrt(Math.pow(centredCoordinates.x, 2) + Math.pow(centredCoordinates.y, 2));
-  console.log(magnitude);
   deltaX = (centredCoordinates.x / magnitude) * dx;
   deltaY = (centredCoordinates.y / magnitude) * dy;
-  console.log(deltaX, deltaY);
   cameraX += deltaX;
   cameraY += deltaY;
 }
