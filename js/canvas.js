@@ -19,6 +19,9 @@ function drawCircle(x, y, radius) {
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.fillStyle = "#080808";
+  if (Touch.isTouching()) {
+    ctx.fillStyle = "#0000ff";
+  }
   ctx.fill();
   ctx.closePath();
 }
