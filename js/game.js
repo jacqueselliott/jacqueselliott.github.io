@@ -3,7 +3,7 @@ var hasChanged = true;
 var cameraX;
 var cameraY;
 var relativeChar;
-var dxy = 8;
+var dxy = 5;
 
 var numPointsMax = 12;
 var gameFps = 60;
