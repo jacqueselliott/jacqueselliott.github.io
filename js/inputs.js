@@ -85,3 +85,36 @@ function initialiseInputListeners() {
     Key.onMouseEnter(event);
   }, false);
 }
+
+function handleInputs() {
+  if (Key.isDown(Key.UP) || Key.isDown(Key.W)) {
+    relativeCharY -= dy;
+    hasChanged = true;
+  }
+  if (Key.isDown(Key.LEFT) || Key.isDown(Key.A)) {
+    relativeCharX -= dx;
+    hasChanged = true;
+  } 
+  if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) {
+    relativeCharY += dy;
+    hasChanged = true;
+  } 
+  if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) {
+    relativeCharX += dx;
+    hasChanged = true;
+  }
+  if (Touch.isTouching()) {
+    handleTouch();
+    hasChanged = true;
+  } 
+}
+
+function handleTouch() {
+  var touchCoordinates = Touch.getCoordinates();
+  centredCoordinates = new Coordinates(touchCoordinates.x - (canvas.width / 2), touchCoordinates.y - (canvas.height / 2));
+  magnitude = Math.sqrt(Math.pow(centredCoordinates.x, 2) + Math.pow(centredCoordinates.y, 2));
+  deltaX = (centredCoordinates.x / magnitude) * dx;
+  deltaY = (centredCoordinates.y / magnitude) * dy;
+  relativeCharX += deltaX;
+  relativeCharY += deltaY;
+}
