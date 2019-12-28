@@ -12,7 +12,7 @@ function reconcileCamera() {
   }
   var reconciliation;
   var increment = dxy;
-  if (magnitude >= 7 * increment) {
+  if (magnitude >= 4 * increment) {
     reconciliation = increment;
   } else if (magnitude >= 1 * increment) {
     reconciliation = 0.6 * increment;
