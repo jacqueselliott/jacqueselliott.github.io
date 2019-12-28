@@ -1,35 +1,27 @@
 function cameraNeedsReconciling() {
-  if (relativeCharX != 0 || relativeCharY != 0) {
-      return true;
+  if (relativeChar.isZero()) {
+    return false;
   }
-  return false;
+  return true;
 }
 
 function reconcileCamera() {
-  var recX = reconcileDirection(relativeCharX, dx);
-  var recY = reconcileDirection(relativeCharY, dy);
-  cameraX += recX;
-  cameraY += recY;
-  relativeCharX -= recX;
-  relativeCharY -= recY;
-}
-
-function reconcileDirection(relativeDistance, increment) {
-  if (relativeDistance != 0) {
-    var reconciliation;
-    if (Math.abs(relativeDistance) >= 5 * increment) {
-      reconciliation = increment;
-    } else if (Math.abs(relativeDistance) >= 0.5 * increment) {
-      reconciliation = 0.5 * increment;
-    } else {
-      reconciliation = Math.abs(relativeDistance);
-    }
-    console.log(relativeDistance, reconciliation);
-    if (relativeDistance > 0) {
-      return reconciliation;
-    } else {
-      return -reconciliation;
-    }
+  var magnitude = relativeChar.magnitude();
+  if (magnitude == 0) {
+    return;
   }
-  return 0;
+  var reconciliation;
+  var increment = 0.1;
+  if (magnitude >= 5 * increment) {
+    reconciliation = increment;
+  } else if (magnitude >= 0.5 * increment) {
+    reconciliation = 0.5 * increment;
+  } else {
+    reconciliation = magnitude;
+  }
+  var vecDifference = Vector.times(relativeChar, -reconciliation);
+
+  cameraX -= vecDifference.x;
+  cameraY -= vecDifference.y;
+  relativeChar.add(vecDifference);
 }

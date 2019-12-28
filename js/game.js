@@ -2,8 +2,7 @@ var hasChanged = true;
 
 var cameraX;
 var cameraY;
-var relativeCharX;
-var relativeCharY;
+var relativeChar;
 var dx = 6;
 var dy = 6;
 
@@ -32,7 +31,7 @@ function draw() {
 }
 
 function drawCharacter() {
-  drawCircle((canvas.width / 2) + relativeCharX, (canvas.height / 2) + relativeCharY, 30);
+  drawCircle((canvas.width / 2) + relativeChar.x, (canvas.height / 2) + relativeChar.y, 30);
 }
 
 function drawField() {
@@ -51,6 +50,5 @@ function drawField() {
 function initialiseXY() {
   cameraX = canvas.width / 2;
   cameraY = canvas.height / 2;
-  relativeCharX = 0;
-  relativeCharY = 0;
+  relativeChar = new Vector(0, 0);
 }

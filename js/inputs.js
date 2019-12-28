@@ -87,34 +87,39 @@ function initialiseInputListeners() {
 }
 
 function handleInputs() {
-  if (Key.isDown(Key.UP) || Key.isDown(Key.W)) {
-    relativeCharY -= dy;
-    hasChanged = true;
-  }
-  if (Key.isDown(Key.LEFT) || Key.isDown(Key.A)) {
-    relativeCharX -= dx;
-    hasChanged = true;
-  } 
-  if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) {
-    relativeCharY += dy;
-    hasChanged = true;
-  } 
-  if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) {
-    relativeCharX += dx;
-    hasChanged = true;
-  }
   if (Touch.isTouching()) {
     handleTouch();
     hasChanged = true;
+    return;
   } 
+  handleKeyboard();
+}
+
+function handleKeyboard() {
+  var x = 0, y = 0;
+  if (Key.isDown(Key.UP) || Key.isDown(Key.W)) {
+    y -= dy;
+    hasChanged = true;
+  }
+  if (Key.isDown(Key.LEFT) || Key.isDown(Key.A)) {
+    x -= dx;
+    hasChanged = true;
+  } 
+  if (Key.isDown(Key.DOWN) || Key.isDown(Key.S)) {
+    y += dy;
+    hasChanged = true;
+  } 
+  if (Key.isDown(Key.RIGHT) || Key.isDown(Key.D)) {
+    x += dx;
+    hasChanged = true;
+  }
+  relativeChar.add(new Vector(x, y));
 }
 
 function handleTouch() {
   var touchCoordinates = Touch.getCoordinates();
-  centredCoordinates = new Coordinates(touchCoordinates.x - (canvas.width / 2), touchCoordinates.y - (canvas.height / 2));
-  magnitude = Math.sqrt(Math.pow(centredCoordinates.x, 2) + Math.pow(centredCoordinates.y, 2));
-  deltaX = (centredCoordinates.x / magnitude) * dx;
-  deltaY = (centredCoordinates.y / magnitude) * dy;
-  relativeCharX += deltaX;
-  relativeCharY += deltaY;
+  var touchVec = new Vector(
+    touchCoordinates.x - canvas.width / 2, touchCoordinates.y - (canvas.height / 2));
+  var moveVec = Vector.times(touchVec.direction(), new Vector(dx, dy));
+  relativeChar.add(moveVec);
 }
