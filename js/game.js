@@ -3,8 +3,7 @@ var hasChanged = true;
 var cameraX;
 var cameraY;
 var relativeChar;
-var dx = 6;
-var dy = 6;
+var dxy = 8;
 
 var numPointsMax = 12;
 var gameFps = 60;
@@ -13,6 +12,7 @@ function startGame() {
   createCanvas();
   initialiseXY();
   initialiseInputListeners();
+  console.log("Game started, beginning draw loop");
   setInterval(draw, 1000/gameFps);
 }
 

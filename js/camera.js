@@ -11,15 +11,15 @@ function reconcileCamera() {
     return;
   }
   var reconciliation;
-  var increment = 0.1;
-  if (magnitude >= 5 * increment) {
+  var increment = dxy;
+  if (magnitude >= 7 * increment) {
     reconciliation = increment;
-  } else if (magnitude >= 0.5 * increment) {
-    reconciliation = 0.5 * increment;
+  } else if (magnitude >= 1 * increment) {
+    reconciliation = 0.6 * increment;
   } else {
     reconciliation = magnitude;
   }
-  var vecDifference = Vector.times(relativeChar, -reconciliation);
+  var vecDifference = Vector.times(relativeChar.direction(), -reconciliation);
 
   cameraX -= vecDifference.x;
   cameraY -= vecDifference.y;

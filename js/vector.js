@@ -18,7 +18,10 @@ class Vector {
   }
 
   direction() {
-    var magnitude = magnitude();
+    if (this.isZero()) {
+      return new Vector(0, 0);
+    }
+    var magnitude = this.magnitude();
     return new Vector(this.x / magnitude, this.y / magnitude);
   }
 
