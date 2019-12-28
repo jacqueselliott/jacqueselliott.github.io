@@ -122,5 +122,9 @@ function handleTouch() {
   var touchCoordinates = Touch.getCoordinates();
   var touchVec = new Vector(
     touchCoordinates.x - (canvas.width / 2), touchCoordinates.y - (canvas.height / 2));
-  relativeChar.add(Vector.times(touchVec.direction(), dxy));
+  touchVec = Vector.times(touchVec, 0.05);
+  if (touchVec.magnitude() > dxy) {
+    touchVec = Vector.times(touchVec.direction(), dxy);
+  }
+  relativeChar.add(touchVec);
 }
